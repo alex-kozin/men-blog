@@ -13,6 +13,8 @@ const getPostController = require("./controllers/getPost")
 const storePostController = require("./controllers/storePost")
 const newUserController = require("./controllers/newUser")
 const storeUserController = require("./controllers/storeUser")
+const loginController = require("./controllers/login")
+const loginUserController = require("./controllers/loginUser")
 
 const validationMiddleware = require("./middleware/validationMiddleware")
 
@@ -39,5 +41,7 @@ app.use("/posts/store", validationMiddleware)
 app.post("/posts/store", storePostController)
 
 app.get("/auth/register", newUserController)
-
 app.post("/users/register", storeUserController)
+app.get("/auth/login", loginController)
+app.post("/users/login", loginUserController)
+
