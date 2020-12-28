@@ -12,6 +12,7 @@ const newPostController = require("./controllers/newPost")
 const getPostController = require("./controllers/getPost")
 const storePostController = require("./controllers/storePost")
 
+const validationMiddleware = require("./middleware/validationMiddleware")
 
 mongoose.connect("mongodb://localhost/blogdb", { useNewUrlParser: true })
 
@@ -32,11 +33,5 @@ app.get("/post/:id", getPostController)
 app.get("/contact", contactController)
 app.get("/posts/new", newPostController)
 
-const validationMiddleware = (req, res, next) => {
-    if (req.files == null || req.body.title == null)
-        return res.redirect('/posts/new')
-    next()
-}
 app.use("/posts/store", validationMiddleware)
-
 app.post("/posts/store", storePostController)
