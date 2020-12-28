@@ -1,4 +1,3 @@
-const config = require("./config")
 const express = require("express")
 const mongoose = require("mongoose")
 const expressSession = require("express-session")
@@ -24,8 +23,9 @@ const validationMiddleware = require("./middleware/validationMiddleware")
 const authMiddleware = require("./middleware/authMiddleware")
 const redirectIfAuth = require("./middleware/redirectIfAuthenticatedMiddleware")
 
-const connection_string = config.debug ? config.local.connection_string : config.prod.connection_string
-mongoose.connect(connection_string, {
+const config = process.env.PRODUCTION ? process.env : require("./config")
+
+mongoose.connect(config.connection_string, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
@@ -34,9 +34,8 @@ mongoose.connect(connection_string, {
 
 const app = new express()
 
-const session_secret = config.debug ? config.local.session_secret : config.prod.connection_string
 app.use(expressSession({
-    secret: session_secret
+    secret: config.session_secret
 }))
 
 global.loggedIn = null
@@ -52,7 +51,7 @@ app.use(fileUpload())
 app.use(express.static("public"))
 app.use(flash())
 
-let port = process.env.PORT ? process.env.PORT : config.local.port
+let port = process.env.PRODUCTION ? process.env.PORT : config.port
 app.listen(port, ()=>{
     console.log(`App listening on port ${port}`)
 })
