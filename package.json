@@ -1,22 +1,42 @@
 {
   "name": "men-blog",
   "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "description": "A sample blog template with MEN stack: MongoDB + Express + NodeJS",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alex-kozin/men-blog.git"
-  },
-  "author": "Alex Kozin",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alex-kozin/men-blog/issues"
   },
-  "homepage": "https://github.com/alex-kozin/men-blog#readme",
+  "license": "MIT",
+  "author": "Alex Kozin",
+  "contributors": [
+    "Alex Kozin",
+    "David Miller (Bootstrap Theme)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-kozin/men-blog"
+  },
   "dependencies": {
-    "express": "^4.17.1"
+    "@fortawesome/fontawesome-free": "5.15.1",
+    "bootstrap": "4.5.3",
+    "express": "^4.17.1",
+    "jquery": "3.5.1"
+  },
+  "devDependencies": {
+    "browser-sync": "2.26.13",
+    "del": "6.0.0",
+    "gulp": "4.0.2",
+    "gulp-autoprefixer": "7.0.1",
+    "gulp-clean-css": "4.3.0",
+    "gulp-header": "2.0.9",
+    "gulp-plumber": "^1.2.1",
+    "gulp-rename": "2.0.0",
+    "gulp-sass": "4.1.0",
+    "gulp-uglify": "3.0.2",
+    "merge-stream": "2.0.0",
+    "nodemon": "^2.0.6"
   }
 }
