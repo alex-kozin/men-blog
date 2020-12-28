@@ -24,3 +24,6 @@ app.get("/post", (req, res) => {
 app.get("/contact", (req, res) => {
     res.render("contact")
 })
+app.get("/posts/new", (req, res) => {
+    res.render("create")
+})
