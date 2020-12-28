@@ -19,6 +19,9 @@
     "type": "git",
     "url": "git+https://github.com/alex-kozin/men-blog"
   },
+  "engines": {
+    "node": "10.16.3"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.1",
     "bcrypt": "^5.0.0",
