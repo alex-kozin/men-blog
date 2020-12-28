@@ -1,3 +1,4 @@
+const config = require("./config")
 const express = require("express")
 const mongoose = require("mongoose")
 const expressSession = require("express-session")
@@ -23,7 +24,8 @@ const validationMiddleware = require("./middleware/validationMiddleware")
 const authMiddleware = require("./middleware/authMiddleware")
 const redirectIfAuth = require("./middleware/redirectIfAuthenticatedMiddleware")
 
-mongoose.connect("mongodb://localhost/blogdb", {
+const connection_string = config.debug ? config.local.connection_string : config.prod.connection_string
+mongoose.connect(connection_string, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex: true,
@@ -32,8 +34,9 @@ mongoose.connect("mongodb://localhost/blogdb", {
 
 const app = new express()
 
+const session_secret = config.debug ? config.local.session_secret : config.prod.connection_string
 app.use(expressSession({
-    secret: "not very secret"
+    secret: session_secret
 }))
 
 global.loggedIn = null
@@ -49,8 +52,8 @@ app.use(fileUpload())
 app.use(express.static("public"))
 app.use(flash())
 
-app.listen(4000, ()=>{
-    console.log("App listening on port 4000")
+app.listen(config.local.port, ()=>{
+    console.log(`App listening on port ${config.local.port}`)
 })
 
 app.get("/", homeController)

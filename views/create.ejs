@@ -26,7 +26,6 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
-        <p>Add new post by typing the contents below:</p>
         <form action="/posts/store", method="POST", enctype="multipart/form-data">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
@@ -37,7 +36,14 @@
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Description</label>
-              <textarea rows="5" class="form-control" placeholder="Insert your text here" id="body" name="body"></textarea>
+              <textarea class="form-control" id="body" name="body"></textarea>
+              <script>
+                $('#body').summernote({
+                  placeholder: "Insert your text here",
+                  tabsize: 2,
+                  height: 200
+                });
+              </script>
             </div>
           </div>
           <div class="control-group">
