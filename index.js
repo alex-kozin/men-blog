@@ -18,8 +18,14 @@ const loginController = require("./controllers/login")
 const loginUserController = require("./controllers/loginUser")
 
 const validationMiddleware = require("./middleware/validationMiddleware")
+const authMiddleware = require("./middleware/authMiddleware")
 
-mongoose.connect("mongodb://localhost/blogdb", { useNewUrlParser: true })
+mongoose.connect("mongodb://localhost/blogdb", {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+})
 
 const app = new express()
 app.use(expressSession({
@@ -39,10 +45,10 @@ app.get("/", homeController)
 app.get("/about", aboutController)
 app.get("/post/:id", getPostController)
 app.get("/contact", contactController)
-app.get("/posts/new", newPostController)
+app.get("/posts/new", authMiddleware, newPostController)
 
 app.use("/posts/store", validationMiddleware)
-app.post("/posts/store", storePostController)
+app.post("/posts/store", authMiddleware, storePostController)
 
 app.get("/auth/register", newUserController)
 app.post("/users/register", storeUserController)
