@@ -52,8 +52,9 @@ app.use(fileUpload())
 app.use(express.static("public"))
 app.use(flash())
 
-app.listen(config.local.port, ()=>{
-    console.log(`App listening on port ${config.local.port}`)
+let port = process.env.PORT ? process.env.PORT : config.local.port
+app.listen(port, ()=>{
+    console.log(`App listening on port ${port}`)
 })
 
 app.get("/", homeController)
