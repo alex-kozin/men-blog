@@ -41,6 +41,13 @@ app.get("/posts/new", (req, res) => {
     res.render("create")
 })
 
+const validationMiddleware = (req, res, next) => {
+    if (req.files == null || req.body.title == null)
+        return res.redirect('/posts/new')
+    next()
+}
+app.use("/posts/store", validationMiddleware)
+
 app.post("/posts/store", (req, res) => {
     let image = req.files.image
     image.mv(path.resolve(__dirname, "public/img", image.name), async error => {
