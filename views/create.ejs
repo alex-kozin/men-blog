@@ -27,17 +27,23 @@
     <div class="row">
       <div class="col-lg-8 col-md-10 mx-auto">
         <p>Add new post by typing the contents below:</p>
-        <form action="/posts/store", method="POST">
+        <form action="/posts/store", method="POST", enctype="multipart/form-data">
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Title</label>
               <input type="text" class="form-control" placeholder="Your title here" id="title" name="title">
             </div>
-        </div>
+          </div>
           <div class="control-group">
             <div class="form-group floating-label-form-group controls">
               <label>Description</label>
               <textarea rows="5" class="form-control" placeholder="Insert your text here" id="body" name="body"></textarea>
+            </div>
+          </div>
+          <div class="control-group">
+            <div class="form-group floating-label-form-group controls">
+              <label>Image</label>
+              <input type="file"class="form-control" id="image" name="image" />
             </div>
           </div>
           <br>
