@@ -11,6 +11,7 @@ const aboutController = require('./controllers/about')
 const newPostController = require("./controllers/newPost")
 const getPostController = require("./controllers/getPost")
 const storePostController = require("./controllers/storePost")
+const newUserController = require("./controllers/newUser")
 
 const validationMiddleware = require("./middleware/validationMiddleware")
 
@@ -35,3 +36,5 @@ app.get("/posts/new", newPostController)
 
 app.use("/posts/store", validationMiddleware)
 app.post("/posts/store", storePostController)
+
+app.get("/auth/register", newUserController)
