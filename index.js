@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const expressSession = require("express-session")
 const ejs = require("ejs")
 
 const bodyParser = require("body-parser")
@@ -21,6 +22,9 @@ const validationMiddleware = require("./middleware/validationMiddleware")
 mongoose.connect("mongodb://localhost/blogdb", { useNewUrlParser: true })
 
 const app = new express()
+app.use(expressSession({
+    secret: "not very secret"
+}))
 app.set("view engine", "ejs")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
