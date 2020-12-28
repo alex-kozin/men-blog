@@ -16,9 +16,11 @@ const newUserController = require("./controllers/newUser")
 const storeUserController = require("./controllers/storeUser")
 const loginController = require("./controllers/login")
 const loginUserController = require("./controllers/loginUser")
+const logoutController = require("./controllers/logout")
 
 const validationMiddleware = require("./middleware/validationMiddleware")
 const authMiddleware = require("./middleware/authMiddleware")
+const redirectIfAuth = require("./middleware/redirectIfAuthenticatedMiddleware")
 
 mongoose.connect("mongodb://localhost/blogdb", {
     useNewUrlParser: true,
@@ -28,9 +30,17 @@ mongoose.connect("mongodb://localhost/blogdb", {
 })
 
 const app = new express()
+
 app.use(expressSession({
     secret: "not very secret"
 }))
+
+global.loggedIn = null
+app.use("*", (req, res, next) => {
+    loggedIn = req.session.userId
+    next()
+})
+
 app.set("view engine", "ejs")
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -50,8 +60,12 @@ app.get("/posts/new", authMiddleware, newPostController)
 app.use("/posts/store", validationMiddleware)
 app.post("/posts/store", authMiddleware, storePostController)
 
-app.get("/auth/register", newUserController)
-app.post("/users/register", storeUserController)
-app.get("/auth/login", loginController)
-app.post("/users/login", loginUserController)
+app.get("/auth/register", redirectIfAuth, newUserController)
+app.post("/users/register", redirectIfAuth, storeUserController)
 
+app.get("/auth/login", redirectIfAuth, loginController)
+app.post("/users/login", redirectIfAuth, loginUserController)
+
+app.get("/auth/logout", authMiddleware, logoutController)
+
+app.use((req, res) => res.render("notfound"))
