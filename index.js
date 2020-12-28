@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const expressSession = require("express-session")
+const flash = require("connect-flash")
 const ejs = require("ejs")
 
 const bodyParser = require("body-parser")
@@ -12,7 +13,7 @@ const aboutController = require('./controllers/about')
 const newPostController = require("./controllers/newPost")
 const getPostController = require("./controllers/getPost")
 const storePostController = require("./controllers/storePost")
-const newUserController = require("./controllers/newUser")
+const registerController = require("./controllers/register")
 const storeUserController = require("./controllers/storeUser")
 const loginController = require("./controllers/login")
 const loginUserController = require("./controllers/loginUser")
@@ -46,6 +47,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload())
 app.use(express.static("public"))
+app.use(flash())
 
 app.listen(4000, ()=>{
     console.log("App listening on port 4000")
@@ -60,7 +62,7 @@ app.get("/posts/new", authMiddleware, newPostController)
 app.use("/posts/store", validationMiddleware)
 app.post("/posts/store", authMiddleware, storePostController)
 
-app.get("/auth/register", redirectIfAuth, newUserController)
+app.get("/auth/register", redirectIfAuth, registerController)
 app.post("/users/register", redirectIfAuth, storeUserController)
 
 app.get("/auth/login", redirectIfAuth, loginController)
