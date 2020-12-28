@@ -1,5 +1,8 @@
 const express = require("express")
+const mongoose = require("mongoose")
 const ejs = require("ejs")
+
+mongoose.connect("mongodb://localhost/blogdb", { useNewUrlParser: true })
 
 const app = new express()
 app.set("view engine", "ejs")
